@@ -1,5 +1,5 @@
 {
-  "name": "@_mehrad/ngx-daterangepicker-material",
+  "name": "ngx-daterangepicker-material",
   "version": "4.1.1",
   "private": false,
   "description": "Angular 9 and 10 date range picker (with material design theme)",
