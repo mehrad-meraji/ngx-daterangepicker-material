@@ -1,28 +1,31 @@
 import {
-  Directive,
-  ViewContainerRef,
-  ComponentFactoryResolver,
-  ElementRef,
-  HostListener,
-  forwardRef,
   ChangeDetectorRef,
-  OnInit,
-  OnChanges,
-  SimpleChanges,
-  Input,
+  ComponentFactoryResolver,
+  Directive,
   DoCheck,
+  ElementRef,
+  EventEmitter,
+  forwardRef,
+  HostBinding,
+  HostListener,
+  Input,
   KeyValueDiffer,
   KeyValueDiffers,
+  OnChanges,
+  OnInit,
   Output,
-  EventEmitter,
   Renderer2,
-  HostBinding
+  SimpleChanges,
+  ViewContainerRef
 } from '@angular/core';
 import { DaterangepickerComponent } from './daterangepicker.component';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import * as _moment from 'moment';
 import { LocaleConfig } from './daterangepicker.config';
 import { LocaleService } from './locale.service';
+import { Overlay, OverlayRef, PositionStrategy, ConnectionPositionPair, OverlayConfig } from '@angular/cdk/overlay';
+import { ComponentPortal } from '@angular/cdk/portal';
+
 const moment = _moment;
 
 @Directive({
@@ -116,6 +119,9 @@ export class DaterangepickerDirective implements OnInit, OnChanges, DoCheck {
   timePickerSeconds: Boolean = false;
   @Input() closeOnAutoApply = true;
   _locale: LocaleConfig = {};
+  private datePickerPortal: ComponentPortal<DaterangepickerComponent>;
+  private overlayRef: OverlayRef;
+  pickerRef: any;
   @Input() set locale(value) {
     this._locale = {...this._localeService.config, ...value};
   }
@@ -167,13 +173,15 @@ export class DaterangepickerDirective implements OnInit, OnChanges, DoCheck {
     private _renderer: Renderer2,
     private differs: KeyValueDiffers,
     private _localeService: LocaleService,
-    private elementRef: ElementRef
+    private elementRef: ElementRef,
+    private overlay: Overlay
   ) {
     this.drops = 'down';
     this.opens = 'auto';
+
     const componentFactory = this._componentFactoryResolver.resolveComponentFactory(DaterangepickerComponent);
-    viewContainerRef.clear();
     const componentRef = viewContainerRef.createComponent(componentFactory);
+    viewContainerRef.clear();
     this.picker = (<DaterangepickerComponent>componentRef.instance);
     this.picker.inline = false; // set inline to false for all directive usage
   }
@@ -237,14 +245,51 @@ export class DaterangepickerDirective implements OnInit, OnChanges, DoCheck {
     this._onTouched();
   }
 
+  private getPositions(): ConnectionPositionPair[] {
+    return [
+      {
+        originX: 'start',
+        originY: 'top',
+        overlayX: 'start',
+        overlayY: 'bottom'
+      },
+      {
+        originX: 'start',
+        originY: 'bottom',
+        overlayX: 'start',
+        overlayY: 'top',
+      },
+    ];
+  }
+
+  private getOverlayPosition(origin: HTMLElement): PositionStrategy {
+    return this.overlay.position()
+      .flexibleConnectedTo(origin)
+      .withPositions(this.getPositions())
+      .withFlexibleDimensions(false)
+      .withPush(false);
+  }
+
+  private getOverlayConfig({ origin }): OverlayConfig {
+    return new OverlayConfig({
+      hasBackdrop: true,
+      backdropClass: 'popover-backdrop',
+      positionStrategy: this.getOverlayPosition(origin),
+      scrollStrategy: this.overlay.scrollStrategies.reposition()
+    });
+  }
+
   open(event?: any) {
     if (this.disabled) {
       return;
     }
+    this.datePickerPortal = new ComponentPortal(DaterangepickerComponent);
+    this.overlayRef = this.overlay.create(this.getOverlayConfig({ origin: this._el.nativeElement }));
+    this.overlayRef.backdropClick().subscribe(() => this.overlayRef.detach());
+    this.pickerRef = this.overlayRef.attach(this.datePickerPortal);
+    this.picker = this.pickerRef.instance;
     this.picker.show(event);
-    setTimeout(() => {
-      this.setPosition();
-    });
+    this.setPosition();
   }
 
   hide(e?) {

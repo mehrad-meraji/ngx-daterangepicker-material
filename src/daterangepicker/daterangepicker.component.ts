@@ -172,7 +172,7 @@ export class DaterangepickerComponent implements OnInit {
     @ViewChild('pickerContainer', { static: true }) pickerContainer: ElementRef;
 
     constructor(
-        private el: ElementRef,
+        public el: ElementRef,
         private _ref: ChangeDetectorRef,
         private _localeService: LocaleService
     ) {
