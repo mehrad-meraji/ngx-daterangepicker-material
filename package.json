@@ -1,5 +1,5 @@
 {
-  "name": "@_mehrad/mmr-daterangepicker",
+  "name": "mmr-daterangepicker",
   "version": "4.1.3",
   "private": false,
   "description": "Angular 9 and 10 date range picker (with material design theme)",
