@@ -1,13 +1,15 @@
-<div class="md-drppicker" #pickerContainer
-[ngClass]="{
-    ltr: locale.direction === 'ltr',
-    rtl: this.locale.direction === 'rtl',
-    'shown': isShown || inline,
-    'hidden': !isShown && !inline,
-    'inline': inline,
-    'double': !singleDatePicker && showCalInRanges,
-    'show-ranges': rangesArray.length
-}" [class]="'drops-' + drops + '-' + opens">
+<div class="md-drppicker"
+     #pickerContainer
+     [ngClass]="{
+        ltr: locale.direction === 'ltr',
+        rtl: this.locale.direction === 'rtl',
+        'shown': isShown || inline,
+        'hidden': !isShown && !inline,
+        'inline': inline,
+        'double': !singleDatePicker && showCalInRanges,
+        'show-ranges': rangesArray.length
+     }"
+     [class]="'drops-' + drops + '-' + opens">
     <div class="ranges">
         <ul>
           <li *ngFor="let range of rangesArray">

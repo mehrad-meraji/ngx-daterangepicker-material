@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import * as moment from 'moment';
-import { DaterangepickerComponent, DaterangepickerDirective } from '../../../../src/daterangepicker';
+import { DateRangePickerComponent, DateRangePickerDirective } from '../../../../src/daterangepicker';
 
 @Component({
   selector: 'timepicker',

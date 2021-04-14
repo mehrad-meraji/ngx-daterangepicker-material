@@ -1,5 +1,5 @@
 import { Injectable, Inject } from '@angular/core';
-import { LOCALE_CONFIG, DefaultLocaleConfig, LocaleConfig } from './daterangepicker.config';
+import { LOCALE_CONFIG, DefaultLocaleConfig, LocaleConfig } from './date-range-picker.config';
 
 @Injectable()
 export class LocaleService {

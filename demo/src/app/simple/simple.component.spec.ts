@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { NgxDaterangepickerMd } from '../../../../src/daterangepicker';
+import { NgxDateRangePickerMd } from '../../../../src/daterangepicker';
 
 import { By } from '@angular/platform-browser';
 import { SimpleComponent } from './simple.component';
@@ -16,7 +16,7 @@ describe('SimpleComponent', () => {
       declarations: [ SimpleComponent ],
       imports: [
         FormsModule,
-        NgxDaterangepickerMd.forRoot(),
+        NgxDateRangePickerMd.forRoot(),
         MatToolbarModule
       ]
     })

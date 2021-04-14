@@ -199,13 +199,17 @@ It is possible to open datepicker from outside. You should create an input with 
 
 ```javascript
 
-  ...
-    @ViewChild(DaterangepickerDirective, { static: false }) pickerDirective: DaterangepickerDirective;
-  ...
-  ...
-  openDatepicker() {
-    this.pickerDirective.open();
-  }
+...
+@ViewChild(DateRangePickerDirective, { static: false })
+pickerDirective
+:
+DateRangePickerDirective;
+...
+...
+openDatepicker()
+{
+  this.pickerDirective.open();
+}
 ```
 
 ### Timepicker

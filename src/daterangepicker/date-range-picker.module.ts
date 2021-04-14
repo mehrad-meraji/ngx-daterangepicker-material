@@ -2,15 +2,15 @@ import { CommonModule } from '@angular/common';
 import {  ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 
-import { DaterangepickerComponent } from './daterangepicker.component';
-import { DaterangepickerDirective } from './daterangepicker.directive';
-import { LocaleConfig, LOCALE_CONFIG } from './daterangepicker.config';
+import { DateRangePickerComponent } from './date-range-picker.component';
+import { DateRangePickerDirective } from './date-range-picker.directive';
+import { LocaleConfig, LOCALE_CONFIG } from './date-range-picker.config';
 import { LocaleService } from './locale.service';
 
 @NgModule({
   declarations: [
-    DaterangepickerComponent,
-    DaterangepickerDirective
+    DateRangePickerComponent,
+    DateRangePickerDirective
   ],
   imports: [
     CommonModule,
@@ -19,19 +19,19 @@ import { LocaleService } from './locale.service';
   ],
   providers: [],
   exports: [
-    DaterangepickerComponent,
-    DaterangepickerDirective
+    DateRangePickerComponent,
+    DateRangePickerDirective
   ],
   entryComponents: [
-    DaterangepickerComponent
+    DateRangePickerComponent
   ]
 })
-export class NgxDaterangepickerMd {
+export class NgxDateRangePickerMd {
   constructor() {
   }
-  static forRoot(config: LocaleConfig = {}): ModuleWithProviders<NgxDaterangepickerMd> {
+  static forRoot(config: LocaleConfig = {}): ModuleWithProviders<NgxDateRangePickerMd> {
     return {
-      ngModule: NgxDaterangepickerMd,
+      ngModule: NgxDateRangePickerMd,
       providers: [
         { provide: LOCALE_CONFIG, useValue: config},
         { provide: LocaleService, useClass: LocaleService, deps: [LOCALE_CONFIG]}
